@@ -115,6 +115,42 @@ app.fetch = () => {
         $(this).toggleClass('chk');
       });
 
+      $('.addFriend').on('click', function() {
+        var friend = $(this).parent().closest('a').attr('class');
+        $('.' + friend).find('i').replaceWith('<i class="fa fa-github-alt removeFriend" aria-hidden="true"></i>');
+        if (friend) { app.friends.push(friend); }
+        app.friends = _.uniq(app.friends);
+
+        console.log(app.friends);
+
+        $('.friends').empty();
+
+        for (var i = 0; i < app.friends.length; i++) {
+          $('.friends').append('<div><i class="fa fa-snapchat-ghost"></i>' + app.friends[i] + '</div>');
+        }
+      });
+
+      $('.removeFriend').on('click', function() {
+        var friend = $(this).parent().closest('a').attr('class');
+        $('.' + friend).find('i').replaceWith('<i class="fa fa-user-plus addFriend" aria-hidden="true"></i>');
+        var index;
+
+        for (var i = 0; i < app.friends; i++) {
+          if (app.friends[i] === friend) {
+            index = i;
+          }
+        }
+
+        app.friends = app.friends.splice(index, 1);
+        console.log(app.friends);
+
+        $('.friends').empty();
+
+        for (var i = 0; i < app.friends.length; i++) {
+          $('.friends').append('<div><i class="fa fa-snapchat-ghost"></i>' + app.friends[i] + '</div>');
+        }
+      });
+
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -153,7 +189,9 @@ app.handleSubmit = () => {
 };
 
 $(document).ready(function() {
-  app.fetch();
+  setInterval(function() {
+    app.fetch();
+  }, 1000);
 
   $('.postmsg').on('keydown click', function(event) {
     if ((event.type === 'keydown' && event.keyCode === 13) || event.type === 'click') {
@@ -174,9 +212,4 @@ $(document).ready(function() {
   });
 
   $('#chats').animate({scrollTop: 10000}, 2000);
-
-
-  $('.radGroup1').on('click', function() {
-    $('this').toggleClass('chk');
-  });
 });

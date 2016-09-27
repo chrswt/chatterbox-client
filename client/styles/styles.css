@@ -24,6 +24,16 @@ div {
     max-height: 85vh;
 }
 
+.selectize-input .items .has-options .full .has-items {
+    height: 50px;
+    top: 17px;
+}
+
+.button .postmsg {
+    width: 5%;
+    float: left;
+}
+
 #main, #chats {
     opacity: 1;
     width: 100%;
