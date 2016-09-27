@@ -30,13 +30,19 @@ app.send = (message) => { // pass in message object
   });
 };
 
+// app.renderMessage = (message) => {
+//   $('#chats').append('<div class="' + message.roomname + ' room">' + 
+//     '<a class="' + filterXSS(message.username) + '">' + 
+//     filterXSS(message.username) + '</a>' + '@' + 
+//     filterXSS(message.roomname) + ': ' + 
+//     filterXSS(message.text) +'<p class="timeago">' + 
+//     jQuery.timeago(message.createdAt) + '</p><i class="fa fa-heart" aria-hidden="true"></i><i class="fa fa-plus" aria-hidden="true"></i></div>');
+// };
+
 app.renderMessage = (message) => {
   $('#chats').append('<div class="' + message.roomname + ' room">' + 
     '<a class="' + filterXSS(message.username) + '">' + 
-    filterXSS(message.username) + '</a>' + '@' + 
-    filterXSS(message.roomname) + ': ' + 
-    filterXSS(message.text) +'<p class="timeago">' + 
-    jQuery.timeago(message.createdAt) + '</p></div>');
+    '<i class="fa fa-user-plus addFriend" aria-hidden="true"></i>' + '  @' + filterXSS(message.username) + '</a>' + ' ' + '<span class="timeago">' + jQuery.timeago(message.createdAt) + '</span>' + '<br>' + '<input type="checkbox" name="checkboxG4" id="checkboxG4" class="css-checkbox"><label for="checkboxG4" class="css-label radGroup1 clr"></label>' + filterXSS(message.text) + '</div>');
 };
 
 app.fetch = () => {
@@ -71,9 +77,9 @@ app.fetch = () => {
             filterXSS(message.roomname) + ': ' + 
             filterXSS(message.text) + '<p class="timeago">' +
             jQuery.timeago(message.createdAt) + '</div>';
-            var location = $('#chats').find('div:first-child');
+            var location = $('#chats').find('div:last-child');
 
-            $(rendered).hide().insertBefore(location).fadeIn(1000);
+            $(rendered).hide().insertAfter(location).fadeIn(1000);
           }
 
           lastRetrieved = newData[0].objectId;
@@ -85,13 +91,16 @@ app.fetch = () => {
         app.clearMessages();
         app.clearRooms();
 
-        data.results.forEach(function(message) {
+        for (var i = data.results.length - 1; i >= 0; i--) {
+          var message = data.results[i];
           app.renderMessage(message);
           app.rooms.push(message.roomname);
-        });
+        }
 
         app.renderRoom(app.rooms);
       }
+
+      $('#chats').animate({scrollTop: 10000}, 500);
 
       $('a').on('click', function(e) {
         e.preventDefault();
@@ -101,7 +110,11 @@ app.fetch = () => {
       });
 
       $('.roomselect')[0].selectize.setValue(selectedValue);
-     
+
+      $('.radGroup1').on('click', function() {
+        $(this).toggleClass('chk');
+      });
+
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -161,4 +174,9 @@ $(document).ready(function() {
   });
 
   $('#chats').animate({scrollTop: 10000}, 2000);
+
+
+  $('.radGroup1').on('click', function() {
+    $('this').toggleClass('chk');
+  });
 });

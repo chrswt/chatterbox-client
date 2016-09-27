@@ -30,7 +30,7 @@ div {
     height: 50vh;
     margin: 0 auto;
     text-align: left;
-    background: rgba(255,255,255,0.3);
+    /*background: rgba(255,255,255,0.3);*/
     padding: 50px 60px;
    /* border: solid #ddd;*/
     border-width: 0 1px 1px 1px;
@@ -39,19 +39,8 @@ div {
 #main {
     height: 15%;
 }
-form {
-  
-    vertical-align: top;
-}
-.selectize-input {
-    display:inline-block;
-    vertical-align: top;
-}
 
-.fa {
-    display: inline-block;
-    vertical-align: top;
-}
+
 #chats {
     height: 85%;
     max-height: 70vh;
@@ -106,6 +95,9 @@ form input[type=text] {
 
 .room {
   font-family: 'Quicksand', sans-serif;
+  background-color: rgba(255, 255, 255, .3);
+  padding: 5px;
+  margin: 5px;
 }
 
 .chat {
@@ -137,3 +129,41 @@ form input[type=text] {
     background-color: #0090da;
 }
 
+.addFriend {
+
+}
+
+.likePost {
+
+}
+
+
+input[type=checkbox].css-checkbox {
+                            position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+                        }
+
+                        input[type=checkbox].css-checkbox + label.css-label, input[type=checkbox].css-checkbox + label.css-label.clr {
+                            padding-left:20px;
+                            height:15px; 
+                            display:inline-block;
+                            line-height:15px;
+                            background-repeat:no-repeat;
+                            background-position: 0 0;
+                            font-size:15px;
+                            vertical-align:middle;
+                            cursor:pointer;
+
+                        }
+
+                        input[type=checkbox].css-checkbox:checked + label.css-label, input[type=checkbox].css-checkbox + label.css-label.chk {
+                            background-position: 0 -15px;
+                        }
+                        label.css-label {
+                background-image:url(http://csscheckbox.com/checkboxes/u/csscheckbox_1437560032a3e1345ce3a7bb5fec77cc.png);
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }

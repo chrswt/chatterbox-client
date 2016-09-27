@@ -16,7 +16,8 @@
     "xss": "~0.2.13",
     "materialize": "~0.97.7",
     "jquery-timeago": "~1.5.3",
-    "font-awesome": "~4.6.3"
+    "font-awesome": "~4.6.3",
+    "moment-twitter": "~0.2.0"
   },
   "ignore": [
     "**/.*",
