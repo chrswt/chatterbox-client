@@ -12,13 +12,18 @@ div {
 }
 
 .inputmsg {
+  float: left;
   font-size: 22px;
+}
+
+.btn-floating {
+  top: 18px;
 }
 
 #main, #chats {
     /*opacity: 1;*/
     width: 100%;
-    height: 45%;
+    height: 47vh;
     margin: 0 auto;
     text-align: left;
     background: rgba(255,255,255,0.3);
@@ -27,13 +32,13 @@ div {
     border-width: 0 1px 1px 1px;
 }
 
-#main h1 {
+/*#main h1 {
     font-family: 'Muli', sans-serif;
     margin-top: 0;
     font-size: 62px;
     margin-bottom: 5px;
     padding: 5px;
-}
+}*/
 
 #main h1 span {
     font-style:italic;
