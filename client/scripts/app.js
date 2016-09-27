@@ -1,10 +1,3 @@
-// var message = {
-//   username: 'Batman',
-//   text: 'hello test test test',
-//   roomname: 'lobby'
-// };
-
-
 var app = {};
 
 app.init = () => {
@@ -14,6 +7,8 @@ app.init = () => {
 app.rooms = [];
 app.friends = [];
 
+var selectedValue;
+
 app.send = (message) => { // pass in message object
   $.ajax({
   // This is the url you should use to communicate with the parse API server.
@@ -22,7 +17,7 @@ app.send = (message) => { // pass in message object
     data: JSON.stringify({
       username: window.location.search.slice(10),
       text: message,
-      roomname: $('.selectpicker').val()
+      roomname: selectedValue
     }),
     contentType: 'application/json',
     success: function (data) {
@@ -37,7 +32,8 @@ app.send = (message) => { // pass in message object
 };
 
 app.renderMessage = (message) => {
-  $('#chats').append('<div class="' + message.roomname + ' room">' + '<a class="' + filterXSS(message.username) + '">' + filterXSS(message.username) + 
+  $('#chats').append('<div class="' + message.roomname + ' room">' + 
+    '<a class="' + filterXSS(message.username) + '">' + filterXSS(message.username) + 
     '</a>' + '@' + filterXSS(message.roomname) + ': ' + filterXSS(message.text) + '</div>');
 };
 
@@ -82,10 +78,16 @@ app.clearRooms = () => {
 };
 
 app.renderRoom = function(roomArray) {
-  _.uniq(roomArray).forEach(function(room, i) {
+  var rooms = [];
+  _.uniq(roomArray).forEach(function(room) {
+    rooms.push({text: room, value: room});
+  });
 
-    $('.roomselect')[i].selectize.addOption({text: room, value: 'please'});
-    // $('.selectized').append('<option class="' + room + '">' + room + '</option>');
+  var selectize = $('.roomselect')[0].selectize;
+  selectize.clear();
+  selectize.clearOptions();
+  rooms.forEach(function(room) {
+    selectize.addOption(room);
   });
 };
 
@@ -112,30 +114,12 @@ $(document).ready(function() {
     }
   });
 
-  // $('.roomselect').on('change', function() {
-  //   var roomSelect = '.' + $('.selectpicker').val();
-  //   console.log(roomSelect);
-
-  //   if (roomSelect === '.new-room') {
-  //     console.log('selected');
-  //     $('.selectpicker').after($('<div><input type="text" class="inputmsg" placeholder =\'New Room\'/></div>'));
-  //   }
-
-  //   $('.room').hide();
-  //   console.log(roomSelect);
-  //   $(roomSelect).show();
-
-  // });
-
   $('.roomselect').selectize({
     create: true,
     sortField: 'text'
   });
 
+  $('.roomselect').change(function() {
+    selectedValue = ($(this).val());
+  });
 });
-
-
-
-
-
-
