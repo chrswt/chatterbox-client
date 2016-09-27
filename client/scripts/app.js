@@ -8,6 +8,7 @@ app.rooms = [];
 app.friends = [];
 
 var selectedValue;
+var lastRetrieved;
 
 app.send = (message) => { // pass in message object
   $.ajax({
@@ -38,8 +39,6 @@ app.renderMessage = (message) => {
 };
 
 app.fetch = () => {
-  app.clearMessages();
-  app.clearRooms();
   $.ajax({
   // This is the url you should use to communicate with the parse API server.
     url: 'https://api.parse.com/1/classes/messages',
@@ -47,12 +46,48 @@ app.fetch = () => {
     data: {order: '-createdAt', limit: 100},
     contentType: 'application/json',
     success: function (data) {
-      data.results.forEach(function(message) {
-        app.renderMessage(message);
-        app.rooms.push(message.roomname);
-      });
+      if (lastRetrieved) { // page has retrieved data before
 
-      app.renderRoom(app.rooms);
+        if (lastRetrieved === data.results[0].objectId) {
+          console.log('no new stuff');
+          // fully updated, dont do anything
+        } else {
+          console.log('new stuff');
+          var index;
+          for (var i = 0; i < data.results.length; i++) {
+            if (data.results[i].objectId === lastRetrieved) {
+              index = i; // attain index of last updated element
+            }
+          }
+
+          console.log(index);
+
+          // slice and prepend new stuff
+          var newData = data.results.slice(0, index);
+          console.log(newData);
+          for (var i = newData.length - 1; i >= 0; i--) {
+            var message = newData[i];
+            $('#chats').find('div:first-child').before('<div class="' + message.roomname + ' room">' + 
+            '<a class="' + filterXSS(message.username) + '">' + filterXSS(message.username) + 
+            '</a>' + '@' + filterXSS(message.roomname) + ': ' + filterXSS(message.text) + '</div>');
+          }
+
+          lastRetrieved = newData[0].objectId;
+        }
+
+      } else { // full update required (i.e. !lastRetrieved)
+        lastRetrieved = data.results[0].objectId;
+
+        app.clearMessages();
+        app.clearRooms();
+
+        data.results.forEach(function(message) {
+          app.renderMessage(message);
+          app.rooms.push(message.roomname);
+        });
+
+        app.renderRoom(app.rooms);
+      }
 
       $('a').on('click', function(e) {
         e.preventDefault();
