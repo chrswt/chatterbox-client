@@ -12,7 +12,8 @@
     "underscore": "~1.7.0",
     "jquery": "~2.1.1",
     "bootstrap": "~3.3.7",
-    "selectize": "~0.12.3", 
+    "selectize": "~0.12.3",
+    "xss": "~0.2.13" 
   },
   "ignore": [
     "**/.*",

@@ -33,22 +33,35 @@
     <script src="scripts/app.js"></script>
   </head>
   <body>
-    <div id="main">
-      <h1>chatterbox</h1>
-      <!-- Your HTML goes here! -->
-      <select class="roomselect" placeholder="Please select a room...">
-      </select>
-      <form action="#" method="post">
-        <div>
-          <input type="text" class="inputmsg" placeholder='Write your message here'/>
+    <div class="container fluid">
+      <div class="row fluid">
+        <div class="col-lg-4">
+          <!-- SIDEBAR CONTENT -->
+          <div class="side">
+            <h1>We are going to have a bunch of cool stuff here.</h1>
+            <h1>Such as... all active users</h1>
+            <h1>Friends list</h1>
+            <h1>Maybe other cool shit who knows</h1>
+          </div>
         </div>
-          <div class="button postmsg">
-          <button type="submit">Submit</button>
+        <div class="col-lg-8">
+          <div id="main">
+            <h1>chatterbox</h1>
+            <select class="roomselect" placeholder="Please select a room...">
+            </select>
+            <form action="#" method="post">
+              <div>
+                <input type="text" class="inputmsg" placeholder='Write your message here'/>
+              </div>
+              <div class="button postmsg">
+                <button type="submit">Submit</button>
+              </div>
+            </form>
+          </div>
+          <div id="chats" class="pre-scrollable">
+          </div>
         </div>
-    </form>
-    </div>
-    <div id="chats" class="pre-scrollable">
-      <!--chats go here --> 
+      </div>
     </div>
   </body>
 </html>
