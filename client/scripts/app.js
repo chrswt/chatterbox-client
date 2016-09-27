@@ -21,8 +21,8 @@ app.send = (message) => { // pass in message object
     }),
     contentType: 'application/json',
     success: function (data) {
-      console.log(data);
       console.log('chatterbox: Message sent');
+      // $('.roomselect')[0].selectize.setValue(selectedValue);
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -59,8 +59,9 @@ app.fetch = () => {
         if (!_.contains(app.friends, this.className)) {
           app.friends.push(this.className);
         }
-
       });
+
+      $('.roomselect')[0].selectize.setValue(selectedValue);
      
     },
     error: function (data) {
@@ -102,9 +103,6 @@ app.handleSubmit = () => {
 $(document).ready(function() {
   app.fetch();
 
-  // $('select option[value="lobby"]').attr('selected', true);
-  // $('select.selectpicker').val('lobby');
-
   $('.postmsg').on('keydown click', function(event) {
     if ((event.type === 'keydown' && event.keyCode === 13) || event.type === 'click') {
       event.preventDefault();
@@ -120,6 +118,6 @@ $(document).ready(function() {
   });
 
   $('.roomselect').change(function() {
-    selectedValue = ($(this).val());
+    selectedValue = ($(this).val()) || selectedValue; // sticky fix!
   });
 });
