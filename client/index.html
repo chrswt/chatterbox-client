@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="bower_components/selectize/dist/css/selectize.bootstrap3.css">
+    <link href="https://fonts.googleapis.com/css?family=Muli|Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css">
 
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -16,7 +18,9 @@
     <script src="bower_components/xss/dist/xss.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Muli|Quicksand" rel="stylesheet">
+    <script src="bower_components/jquery-timeago/jquery.timeago.js"</script>
+    <script src="bower_components/materialize/dist/js/materialize.min.js"></script>
+
     <script>
       // YOU DO NOT NEED TO EDIT THIS CODE
       if (!/(&|\?)username=/.test(window.location.search)) {
@@ -33,33 +37,31 @@
     <script src="scripts/app.js"></script>
   </head>
   <body>
-    <div class="container fluid">
-      <div class="row fluid">
-        <div class="col-lg-4">
-          <!-- SIDEBAR CONTENT -->
-          <div class="side">
-            <h1>We are going to have a bunch of cool stuff here.</h1>
-            <h1>Such as... all active users</h1>
-            <h1>Friends list</h1>
-            <h1>Maybe other cool shit who knows</h1>
-          </div>
+    <div class="row">
+      <div class="col l4">
+        <!-- SIDEBAR CONTENT -->
+        <div class="side">
+          <h1>We are going to have a bunch of cool stuff here.</h1>
+          <p>Such as... all active users</p>
+          <p>Friends list</p>
+          <p>Maybe other cool shit who knows</p>
         </div>
-        <div class="col-lg-8">
-          <div id="main">
-            <h1>chatterbox</h1>
-            <select class="roomselect" placeholder="Please select a room...">
-            </select>
-            <form action="#" method="post">
-              <div>
-                <input type="text" class="inputmsg" placeholder='Write your message here'/>
-              </div>
-              <div class="button postmsg">
-                <button type="submit">Submit</button>
-              </div>
-            </form>
-          </div>
-          <div id="chats" class="pre-scrollable">
-          </div>
+      </div>
+      <div class="col l8">
+        <div id="main">
+          <h1>chatterbox</h1>
+          <select class="roomselect" placeholder="Please select a room...">
+          </select>
+          <form action="#" method="post">
+            <div>
+              <input type="text" class="inputmsg" placeholder='Write your message here'/>
+            </div>
+            <div class="button postmsg">
+              <button type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+        <div id="chats" class="pre-scrollable">
         </div>
       </div>
     </div>

@@ -21,8 +21,7 @@ app.send = (message) => { // pass in message object
     }),
     contentType: 'application/json',
     success: function (data) {
-      console.log('chatterbox: Message sent');
-      // $('.roomselect')[0].selectize.setValue(selectedValue);
+      // Success
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -33,8 +32,11 @@ app.send = (message) => { // pass in message object
 
 app.renderMessage = (message) => {
   $('#chats').append('<div class="' + message.roomname + ' room">' + 
-    '<a class="' + filterXSS(message.username) + '">' + filterXSS(message.username) + 
-    '</a>' + '@' + filterXSS(message.roomname) + ': ' + filterXSS(message.text) + '</div>');
+    '<a class="' + filterXSS(message.username) + '">' + 
+    filterXSS(message.username) + '</a>' + '@' + 
+    filterXSS(message.roomname) + ': ' + 
+    filterXSS(message.text) +'<p class="timeago">' + 
+    jQuery.timeago(message.createdAt) + '</p></div>');
 };
 
 app.fetch = () => {
@@ -67,14 +69,14 @@ app.fetch = () => {
           for (var i = newData.length - 1; i >= 0; i--) {
             var message = newData[i];
             var rendered = '<div class="' + message.roomname + ' room">' + 
-            '<a class="' + filterXSS(message.username) + '">' + filterXSS(message.username) + 
-            '</a>' + '@' + filterXSS(message.roomname) + ': ' + filterXSS(message.text) + '</div>';
+            '<a class="' + filterXSS(message.username) + '">' + 
+            filterXSS(message.username) + '</a>' + '@' + 
+            filterXSS(message.roomname) + ': ' + 
+            filterXSS(message.text) + '<p class="timeago">' +
+            jQuery.timeago(message.createdAt) + '</div>';
             var location = $('#chats').find('div:first-child');
 
             $(rendered).hide().insertBefore(location).fadeIn(1000);
-
-            // $('#chats').find('div:first-child').before('<div class="' + message.roomname + ' room">' + '<a class="' + filterXSS(message.username) + '">' + filterXSS(message.username) + 
-            // '</a>' + '@' + filterXSS(message.roomname) + ': ' + filterXSS(message.text) + '</div>');
           }
 
           lastRetrieved = newData[0].objectId;
