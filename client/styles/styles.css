@@ -1,23 +1,35 @@
 body {
-    background: #eee;
+    background-image: url('../images/pattern.png');
     text-align: center;
     padding: 0 25px;
     font-family: arial, sans-serif;
+    font-family: 'Quicksand', sans-serif;
+}
+
+div {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px;
+}
+
+.inputmsg {
+  font-size: 22px;
 }
 
 #main, #chats {
-    width: 500px;
-    margin: auto;
+    /*opacity: 1;*/
+    width: 70%;
+    margin: 0 auto;
     text-align: left;
-    background: white;
+    background: rgba(255,255,255,0.3);
     padding: 50px 60px;
     border: solid #ddd;
     border-width: 0 1px 1px 1px;
 }
 
 #main h1 {
+    font-family: 'Muli', sans-serif;
     margin-top: 0;
-    font-size: 35px;
+    font-size: 62px;
     margin-bottom: 5px;
     padding: 5px;
 }
@@ -55,8 +67,12 @@ form {
 form input[type=text] {
     margin-right: 10px;
     width: 70%;
-    font-size: 12px;
+    font-size: 16px;
     padding: 5px;
+}
+
+.room {
+  font-family: 'Quicksand', sans-serif;
 }
 
 .chat {

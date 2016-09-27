@@ -7,8 +7,7 @@ app.init = () => {
 app.rooms = [];
 app.friends = [];
 
-var selectedValue;
-var lastRetrieved;
+var selectedValue, lastRetrieved;
 
 app.send = (message) => { // pass in message object
   $.ajax({
@@ -67,9 +66,15 @@ app.fetch = () => {
           console.log(newData);
           for (var i = newData.length - 1; i >= 0; i--) {
             var message = newData[i];
-            $('#chats').find('div:first-child').before('<div class="' + message.roomname + ' room">' + 
+            var rendered = '<div class="' + message.roomname + ' room">' + 
             '<a class="' + filterXSS(message.username) + '">' + filterXSS(message.username) + 
-            '</a>' + '@' + filterXSS(message.roomname) + ': ' + filterXSS(message.text) + '</div>');
+            '</a>' + '@' + filterXSS(message.roomname) + ': ' + filterXSS(message.text) + '</div>';
+            var location = $('#chats').find('div:first-child');
+
+            $(rendered).hide().insertBefore(location).fadeIn(1000);
+
+            // $('#chats').find('div:first-child').before('<div class="' + message.roomname + ' room">' + '<a class="' + filterXSS(message.username) + '">' + filterXSS(message.username) + 
+            // '</a>' + '@' + filterXSS(message.roomname) + ': ' + filterXSS(message.text) + '</div>');
           }
 
           lastRetrieved = newData[0].objectId;
