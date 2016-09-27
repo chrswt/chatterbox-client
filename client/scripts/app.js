@@ -12,6 +12,7 @@ app.init = () => {
 };
 
 app.rooms = [];
+app.friends = [];
 
 app.send = (message) => { // pass in message object
   $.ajax({
@@ -36,11 +37,13 @@ app.send = (message) => { // pass in message object
 };
 
 app.renderMessage = (message) => {
-  $('#chats').append('<div>' + filterXSS(message.username) + '@' + filterXSS(message.roomname) + ': ' + filterXSS(message.text) + '</div>');
+  $('#chats').append('<div class="' + message.roomname + ' room">' + '<a class="' + filterXSS(message.username) + '">' + filterXSS(message.username) + 
+    '</a>' + '@' + filterXSS(message.roomname) + ': ' + filterXSS(message.text) + '</div>');
 };
 
 app.fetch = () => {
   app.clearMessages();
+  app.clearRooms();
   $.ajax({
   // This is the url you should use to communicate with the parse API server.
     url: 'https://api.parse.com/1/classes/messages',
@@ -54,6 +57,14 @@ app.fetch = () => {
       });
 
       app.renderRoom(app.rooms);
+
+      $('a').on('click', function(e) {
+        e.preventDefault();
+        if (!_.contains(app.friends, this.className)) {
+          app.friends.push(this.className);
+        }
+
+      });
      
     },
     error: function (data) {
@@ -64,12 +75,17 @@ app.fetch = () => {
 };
 
 app.clearMessages = () => {
+  $('.selectpicker').empty();
+};
+app.clearRooms = () => {
   $('#chats').empty();
 };
 
 app.renderRoom = function(roomArray) {
-  _.uniq(roomArray).forEach(function(room) {
-    $('.selectpicker').append('<option>' + room + '</option>');
+  _.uniq(roomArray).forEach(function(room, i) {
+
+    $('.roomselect')[i].selectize.addOption({text: room, value: 'please'});
+    // $('.selectized').append('<option class="' + room + '">' + room + '</option>');
   });
 };
 
@@ -84,8 +100,42 @@ app.handleSubmit = () => {
 $(document).ready(function() {
   app.fetch();
 
-  $('.postmsg').on('click', function() {
-    app.send($('.inputmsg').val());
+  // $('select option[value="lobby"]').attr('selected', true);
+  // $('select.selectpicker').val('lobby');
+
+  $('.postmsg').on('keydown click', function(event) {
+    if ((event.type === 'keydown' && event.keyCode === 13) || event.type === 'click') {
+      event.preventDefault();
+      app.send($('.inputmsg').val());
+      $('.inputmsg').val('');
+      app.fetch();
+    }
   });
+
+  // $('.roomselect').on('change', function() {
+  //   var roomSelect = '.' + $('.selectpicker').val();
+  //   console.log(roomSelect);
+
+  //   if (roomSelect === '.new-room') {
+  //     console.log('selected');
+  //     $('.selectpicker').after($('<div><input type="text" class="inputmsg" placeholder =\'New Room\'/></div>'));
+  //   }
+
+  //   $('.room').hide();
+  //   console.log(roomSelect);
+  //   $(roomSelect).show();
+
+  // });
+
+  $('.roomselect').selectize({
+    create: true,
+    sortField: 'text'
+  });
+
 });
+
+
+
+
+
 
