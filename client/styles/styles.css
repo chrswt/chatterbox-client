@@ -20,16 +20,43 @@ div {
   top: 18px;
 }
 
+.pre-scrollable {
+    max-height: 85vh;
+}
+
 #main, #chats {
-    /*opacity: 1;*/
+    opacity: 1;
     width: 100%;
-    height: 47vh;
+    height: 50vh;
     margin: 0 auto;
     text-align: left;
     background: rgba(255,255,255,0.3);
     padding: 50px 60px;
-    border: solid #ddd;
+   /* border: solid #ddd;*/
     border-width: 0 1px 1px 1px;
+}
+
+#main {
+    height: 15%;
+}
+form {
+  
+    vertical-align: top;
+}
+.selectize-input {
+    display:inline-block;
+    vertical-align: top;
+}
+
+.fa {
+    display: inline-block;
+    vertical-align: top;
+}
+#chats {
+    height: 85%;
+    max-height: 70vh;
+    margin-top: 3%;
+    padding-bottom: 0%;
 }
 
 /*#main h1 {

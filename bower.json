@@ -14,9 +14,9 @@
     "bootstrap": "~3.3.7",
     "selectize": "~0.12.3",
     "xss": "~0.2.13",
-    "timeago": "~1.5.3",
     "materialize": "~0.97.7",
-    "fontawesome": "~4.6.3"
+    "jquery-timeago": "~1.5.3",
+    "font-awesome": "~4.6.3"
   },
   "ignore": [
     "**/.*",
@@ -26,4 +26,3 @@
     "tests"
   ]
 }
-

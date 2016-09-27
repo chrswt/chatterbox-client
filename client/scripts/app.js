@@ -61,11 +61,8 @@ app.fetch = () => {
             }
           }
 
-          console.log(index);
-
           // slice and prepend new stuff
           var newData = data.results.slice(0, index);
-          console.log(newData);
           for (var i = newData.length - 1; i >= 0; i--) {
             var message = newData[i];
             var rendered = '<div class="' + message.roomname + ' room">' + 
@@ -162,4 +159,6 @@ $(document).ready(function() {
   $('.roomselect').change(function() {
     selectedValue = ($(this).val()) || selectedValue; // sticky fix!
   });
+
+  $('#chats').animate({scrollTop: 10000}, 2000);
 });
