@@ -124,6 +124,11 @@ form input[type=text] {
     background-color: #ddd;
 }
 
+.message{
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .spinner {
     float: right;
     height: 46px;
@@ -139,14 +144,24 @@ form input[type=text] {
     background-color: #0090da;
 }
 
-.addFriend {
-
+a {
+    text-decoration: none !important;
+    font-size: 24px;
 }
 
-.likePost {
-
+.timeago {
+    font-size: 12px;
+    /*font-style: italic;*/
+    letter-spacing: 0.1px;
 }
 
+.addFriend, .removeFriend {
+    cursor: pointer;
+}
+
+.radGroup1 {
+    font-size: 35px !important;
+}
 
 input[type=checkbox].css-checkbox {
                             position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
