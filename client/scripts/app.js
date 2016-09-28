@@ -1,11 +1,7 @@
 var app = {};
 
-app.init = () => {
-
-};
-
 app.rooms = [];
-app.friends = [];
+app.friends = {};
 
 var selectedValue, lastRetrieved;
 
@@ -30,19 +26,14 @@ app.send = (message) => { // pass in message object
   });
 };
 
-// app.renderMessage = (message) => {
-//   $('#chats').append('<div class="' + message.roomname + ' room">' + 
-//     '<a class="' + filterXSS(message.username) + '">' + 
-//     filterXSS(message.username) + '</a>' + '@' + 
-//     filterXSS(message.roomname) + ': ' + 
-//     filterXSS(message.text) +'<p class="timeago">' + 
-//     jQuery.timeago(message.createdAt) + '</p><i class="fa fa-heart" aria-hidden="true"></i><i class="fa fa-plus" aria-hidden="true"></i></div>');
-// };
-
 app.renderMessage = (message) => {
   $('#chats').append('<div class="' + message.roomname + ' room">' + 
     '<a class="' + filterXSS(message.username) + '">' + 
-    '<i class="fa fa-user-plus addFriend" aria-hidden="true"></i>' + '  @' + filterXSS(message.username) + '</a>' + ' ' + '<span class="timeago">' + jQuery.timeago(message.createdAt) + '</span>' + '<br>' + '<input type="checkbox" name="checkboxG4" id="checkboxG4" class="css-checkbox"><label for="checkboxG4" class="css-label radGroup1 clr"></label>' + filterXSS(message.text) + '</div>');
+    '<i class="fa fa-user-plus addFriend" aria-hidden="true"></i>' +
+    '  @' + filterXSS(message.username) + '</a>' + ' ' + 
+    '<span class="timeago">' + jQuery.timeago(message.createdAt) + '</span>' + '<br>' + 
+    '<input type="checkbox" name="checkboxG4" id="checkboxG4" class="css-checkbox"><label for="checkboxG4" class="css-label radGroup1 clr"></label>' + 
+    filterXSS(message.text) + '</div>');
 };
 
 app.fetch = () => {
@@ -56,10 +47,8 @@ app.fetch = () => {
       if (lastRetrieved) { // page has retrieved data before
 
         if (lastRetrieved === data.results[0].objectId) {
-          console.log('no new stuff');
           // fully updated, dont do anything
         } else {
-          console.log('new stuff');
           var index;
           for (var i = 0; i < data.results.length; i++) {
             if (data.results[i].objectId === lastRetrieved) {
@@ -100,14 +89,6 @@ app.fetch = () => {
         app.renderRoom(app.rooms);
       }
 
-      $('#chats').animate({scrollTop: 10000}, 500);
-
-      $('a').on('click', function(e) {
-        e.preventDefault();
-        if (!_.contains(app.friends, this.className)) {
-          app.friends.push(this.className);
-        }
-      });
 
       $('.roomselect')[0].selectize.setValue(selectedValue);
 
@@ -117,38 +98,12 @@ app.fetch = () => {
 
       $('.addFriend').on('click', function() {
         var friend = $(this).parent().closest('a').attr('class');
-        $('.' + friend).find('i').replaceWith('<i class="fa fa-github-alt removeFriend" aria-hidden="true"></i>');
-        if (friend) { app.friends.push(friend); }
-        app.friends = _.uniq(app.friends);
-
-        console.log(app.friends);
-
-        $('.friends').empty();
-
-        for (var i = 0; i < app.friends.length; i++) {
-          $('.friends').append('<div><i class="fa fa-snapchat-ghost"></i>' + app.friends[i] + '</div>');
-        }
+        app.addFriend(friend);
       });
 
       $('.removeFriend').on('click', function() {
         var friend = $(this).parent().closest('a').attr('class');
-        $('.' + friend).find('i').replaceWith('<i class="fa fa-user-plus addFriend" aria-hidden="true"></i>');
-        var index;
-
-        for (var i = 0; i < app.friends; i++) {
-          if (app.friends[i] === friend) {
-            index = i;
-          }
-        }
-
-        app.friends = app.friends.splice(index, 1);
-        console.log(app.friends);
-
-        $('.friends').empty();
-
-        for (var i = 0; i < app.friends.length; i++) {
-          $('.friends').append('<div><i class="fa fa-snapchat-ghost"></i>' + app.friends[i] + '</div>');
-        }
+        app.removeFriend(friend);
       });
 
     },
@@ -158,6 +113,8 @@ app.fetch = () => {
     }
   });
 };
+
+
 
 app.clearMessages = () => {
   $('.selectpicker').empty();
@@ -180,18 +137,36 @@ app.renderRoom = function(roomArray) {
   });
 };
 
-app.handleUsernameClick = () => {
+app.addFriend = friend => {
+  $('.' + friend).find('i').replaceWith('<i class="fa fa-github-alt removeFriend" aria-hidden="true"></i>');
+  if (!app.friends.hasOwnProperty(friend) && friend !== undefined) {
+    app.friends[friend] = friend;
+  }
 
+  app.updateFriendsList();
 };
 
-app.handleSubmit = () => {
+app.removeFriend = friend => {
+  $('.' + friend).find('i').replaceWith('<i class="fa fa-user-plus addFriend" aria-hidden="true"></i>');
+  delete app.friends[friend];
+  
+  app.updateFriendsList();
+};
 
+app.updateFriendsList = () => {
+  $('.friends').empty();
+  
+  for (var key in app.friends) {
+    $('.friends').append('<div><i class="fa fa-snapchat-ghost"></i>' + app.friends[key] + '</div>');
+  }
 };
 
 $(document).ready(function() {
+  app.fetch();
+
   setInterval(function() {
     app.fetch();
-  }, 1000);
+  }, 10000);
 
   $('.postmsg').on('keydown click', function(event) {
     if ((event.type === 'keydown' && event.keyCode === 13) || event.type === 'click') {
@@ -209,6 +184,7 @@ $(document).ready(function() {
 
   $('.roomselect').change(function() {
     selectedValue = ($(this).val()) || selectedValue; // sticky fix!
+    console.log(selectedValue);
   });
 
   $('#chats').animate({scrollTop: 10000}, 2000);
