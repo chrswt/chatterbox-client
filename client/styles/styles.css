@@ -141,11 +141,12 @@ form input[type=text] {
 
 .friend {
     color: #fff;
-    background-color: rgba(76, 255, 212, 0.2);
+    background-color: rgba(0, 45, 127, 0.2);
     height: 40px;
     font-size: 28px;
     /*padding: 10px 5px 10px 5px;*/
     margin-bottom: 5px;
+    border: 1px solid;
 }
 
 a {

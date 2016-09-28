@@ -93,22 +93,25 @@ app.fetch = () => {
       $('.roomselect')[0].selectize.setValue(selectedValue);
 
       //toggles class for the like button orange fill
-      $('.radGroup1').on('click', function() {
-        $(this).toggleClass('chk');
-      });
+      setTimeout(function() {
+        $('.radGroup1').on('click', function() {
+          $(this).toggleClass('chk');
+        });
+
+        $('.addFriend').on('click', function() {
+          var friend = $(this).parent().closest('a').attr('class');
+          app.addFriend(friend);
+        });
+
+        $('.removeFriend').on('click', function() {
+          var friend = $(this).parent().closest('a').attr('class');
+          app.removeFriend(friend);
+        });
+      }, 200);
 
       //upon clickin the icon, friend finds the parent div that has the username as a class
       //adds the friend name as a key-value pair to the friends object
-      $('.addFriend').on('click', function() {
-        var friend = $(this).parent().closest('a').attr('class');
-        app.addFriend(friend);
-      });
 
-
-      $('.removeFriend').on('click', function() {
-        var friend = $(this).parent().closest('a').attr('class');
-        app.removeFriend(friend);
-      });
 
       //controls scrollbar
       $('#chats').animate({scrollTop: 999999}, 2000);
