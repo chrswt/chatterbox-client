@@ -171,7 +171,7 @@ app.updateFriendsList = () => {
   $('.friends').empty();
   
   for (var key in app.friends) {
-    $('.friends').append('<div><i class="fa fa-snapchat-ghost"></i>' + app.friends[key] + '</div>');
+    $('.friends').append('<div class="friend"><i class="fa fa-snapchat-ghost"></i>' + '    ' + app.friends[key] + '</div>');
   }
 };
 
